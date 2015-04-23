@@ -1,0 +1,18 @@
+<project name="cyb" basedir=".." default="build-images">
+
+    <property name="workingDir" value="target/docker" />
+	<property name="dockerDir" value="src/main/docker"/>
+
+    <target name="build-images">
+        <mkdir dir="${workingDir}" />
+        <copy file="${dockerDir}/Dockerfile" todir="${workingDir}" overwrite="true"/>
+        <copy file="target/cell-0.1-SNAPSHOT.war" tofile="${workingDir}/root.war" overwrite="true" />
+        <exec executable="docker">
+            <arg value="build" />
+            <arg value="-t" />
+            <arg value="cell" />
+            <arg value="${workingDir}" />
+        </exec>
+    </target>
+
+</project>

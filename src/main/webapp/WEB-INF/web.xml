@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+        version="2.5"
+        metadata-complete="true">
+
+    <listener>
+        <listener-class>org.gameofservices.cell.CellContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>cell-probe</servlet-name>
+        <servlet-class>org.gameofservices.cell.ProbeServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>cell-previous-status</servlet-name>
+        <servlet-class>org.gameofservices.cell.PreviousStatusServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
+        <display-name>HystrixMetricsStreamServlet</display-name>
+        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
+        <servlet-class>com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
+        <url-pattern>/hystrix.stream</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>cell-probe</servlet-name>
+        <url-pattern>/amidownorup/probe</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>cell-previous-status</servlet-name>
+        <url-pattern>/previous</url-pattern>
+    </servlet-mapping>
+</web-app>

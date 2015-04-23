@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CELL" class="ch.qos.logback.core.FileAppender">
+        <file>/var/lib/jetty/${HOSTNAME}.log</file>
+        <!--<file>/Users/hans/dev/log/cell/${HOSTNAME}.log</file>-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss:SSS} | %-5level | %thread | %logger{20} | %msg%n%rEx</pattern>
+        </layout>
+    </appender>
+
+    <!--<logger level="debug" name="org.gameofservices" additivity="false">
+        <appender-ref ref="CELL"/>
+    </logger>-->
+
+    <root level="info">
+        <appender-ref ref="CELL"/>
+    </root>
+</configuration>
