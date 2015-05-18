@@ -1,5 +1,6 @@
 package org.gameofservices.cell;
 
+import com.netflix.hystrix.HystrixCommand;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ public class StatusService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StatusService.class);
 
     private final CellPositionService cellPositionService;
+
+    private Map<String, CellStatusCommand> commands = new HashMap<String, CellStatusCommand>();
 
     public StatusService(CellPositionService cellPositionService) {
         this.cellPositionService = cellPositionService;
@@ -62,12 +65,21 @@ public class StatusService {
             final String cellHostName = hostNameForCellPosition(cellPosition);
             final String urlForHostName = urlForHostName(cellHostName, generation);
 
-            status = new CellStatusCommand(urlForHostName).execute();
+            status = getCommandForUrl(urlForHostName).execute();
         }
 
         LOGGER.info("status for direction {} ({}): {}", direction, cellPosition, status);
 
         return status;
+    }
+
+    private HystrixCommand<Boolean> getCommandForUrl(String url) {
+        CellStatusCommand cellStatusCommand = commands.get(url);
+        if (cellStatusCommand == null) {
+            cellStatusCommand = new CellStatusCommand(url);
+            commands.put(url, cellStatusCommand);
+        }
+        return cellStatusCommand;
     }
 
     private String urlForHostName(String leftHostName, int generation) {

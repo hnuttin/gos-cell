@@ -21,7 +21,7 @@
         <servlet-class>org.gameofservices.cell.PreviousStatusServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
-    <servlet>
+    <!--<servlet>
         <display-name>HystrixMetricsStreamServlet</display-name>
         <servlet-name>HystrixMetricsStreamServlet</servlet-name>
         <servlet-class>com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet</servlet-class>
@@ -30,7 +30,7 @@
     <servlet-mapping>
         <servlet-name>HystrixMetricsStreamServlet</servlet-name>
         <url-pattern>/hystrix.stream</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <servlet-mapping>
         <servlet-name>cell-probe</servlet-name>

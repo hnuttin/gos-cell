@@ -2,6 +2,7 @@ package org.gameofservices.cell;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -17,7 +18,8 @@ public class CellStatusCommand extends HystrixCommand<Boolean> {
 
     public CellStatusCommand(String url) {
         super(Setter
-                .withGroupKey(HystrixCommandGroupKey.Factory.asKey(url.substring(7, 9)))
+                .withGroupKey(HystrixCommandGroupKey.Factory.asKey("CellStatusCommand"))
+                .andCommandKey(HystrixCommandKey.Factory.asKey(url.substring(7, 9)))
                 .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
                         .withCircuitBreakerRequestVolumeThreshold(2)
                         .withCircuitBreakerSleepWindowInMilliseconds(30000)));
